@@ -1,0 +1,197 @@
+if filereadable(expand("~/.vimrc_background"))
+  let base16colorspace=256
+  source ~/.vimrc_background
+endif
+
+if has('gui_running')
+    set lines=60 columns=200                " 40 lines of text instead of 24
+    if !exists("g:spf13_no_big_font")
+        if LINUX() && has("gui_running")
+            set guifont=Hack\ 9,Inconsolata-g\ for\ Powerline\ 9,Monaco\ 9,Andale\ Mono\ Regular\ 9,Menlo\ Regular\ 11,Consolas\ Regular\ 12,Courier\ New\ Regular\ 14
+        endif
+    endif
+
+    set tb=
+else
+    if &term == 'xterm' || &term == 'screen'
+        set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
+    endif
+    "set term=builtin_ansi       " Make arrow and other keys work
+endif
+
+"colorscheme nova
+if has('gui_running')
+	colorscheme summerfruit
+	colorscheme base16-railscasts
+	set background=dark
+else
+    set background=dark
+	colorscheme gruvbox
+endif
+
+" set nocursorline
+" set noexpandtab
+set nospell
+" set noautochdir
+
+map <C-b> :bnext<Enter>
+"map <C-c> :%y+<Enter>
+"command QQ qall!
+
+" vim-airline
+"let g:airline_powerline_fonts = 0
+
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+
+" powerline symbols
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = ''
+" Airline Theme
+let g:airline_theme='papercolor'
+
+" {{{ Projects are here
+"let g:project_use_nerdtree = 1
+"set rtp+=~/.vim/bundle/vim-project/
+"call project#rc("/home/azhar/codes")
+
+
+"Project "lpcr/lpcr2"				, "lpcr2"
+"Project "tmjx/sass"					, "sass"
+"Project "sisi/Supreme"				, "Supreme"
+
+" }}}
+
+let g:vdebug_options = {
+\    "port" : 9000,
+\    "server" : 'localhost',
+\    "timeout" : 20,
+\    "on_close" : 'detach',
+\    "break_on_open" : 1,
+\    "ide_key" : 'xdebug-azhar',
+\    "path_maps" : {},
+\    "debug_window_level" : 0,
+\    "debug_file_level" : 4,
+\    "debug_file" : "~/vdebug.log",
+\    "watch_window_style" : 'expanded',
+\    "marker_default" : '⬦',
+\    "marker_closed_tree" : '▸',
+\    "marker_open_tree" : '▾',
+\    "continuous_mode" : 0,
+\}
+
+" \    "background_listener": 0
+
+let g:vdebug_keymap = {
+\    "run" : "<F5>",
+\    "run_to_cursor" : "<F9>",
+\    "step_over" : "<F8>",
+\    "step_into" : "<F7>",
+\    "step_out" : "<shift><F8>",
+\    "close" : "<F6>",
+\    "detach" : "<shift><F7>",
+\    "set_breakpoint" : "<F12>",
+\    "get_context" : "<F11>",
+\    "eval_under_cursor" : "<F10>",
+\    "eval_visual" : "<Leader>e",
+\}
+
+let g:indent_guides_enable_on_vim_startup = 0
+
+" Plugins
+
+" ala writeroom a.k.a distraction mode
+"map K :set linebreak columns=999 guioptions=-R lines=999 fullscreen<cr>
+
+" https://linuxrunway.wordpress.com/2017/02/06/paste-dengan-indent-berlebih-di-vim/
+set pastetoggle=<F10>
+
+" plugin neocomplete
+if count(g:spf13_bundle_groups, 'neocomplete')
+	let g:neocomplete#enable_auto_select = 0
+	let g:neocomplete#disable_auto_complete = 1
+endif
+
+nnoremap bl :ls<CR>
+
+" easytags Plugin
+"set tags=tags
+set tags=./tags,tags;
+"let g:easytags_file=tags
+let g:easytags_dynamic_files = 1
+let g:easytags_async = 1
+let g:easytags_events = ['BufWritePost']
+let g:easytags_suppress_report = 1
+
+" automatically reload .vimrc if any .vimrc* file changed
+autocmd! bufwritepost ~/.vimrc* source ~/.vimrc
+
+" pressing qqq in command will force exit
+cmap qqq qa!
+
+"highlight nonText ctermbg=NONE
+"highlight Normal ctermbg=NONE
+
+" Add bracket at begin and end of selected text
+" see http://vim.wikia.com/wiki/Making_Parenthesis_And_Brackets_Handling_Easier
+" part "Late" bracketing of text
+" Sounds very similar with vim-surround
+:vnoremap _( <Esc>`>a)<Esc>`<i(<Esc>w
+:vnoremap _{ <Esc>`>a}<Esc>`<i{<Esc>w
+:vnoremap _[ <Esc>`>a]<Esc>`<i[<Esc>w
+:vnoremap _" <Esc>`>a"<Esc>`<i"<Esc>w
+:vnoremap _' <Esc>`>a'<Esc>`<i'<Esc>w
+
+:nnoremap mb :CtrlPBuffer<CR>
+:nnoremap mr :CtrlPMRUFiles<CR>
+:nnoremap mt :CtrlPBufTag<CR>
+
+cmap sh2 expandtab shiftwidth=2 softtabstop=2 autoindent smartindent 
+cmap sh4 expandtab shiftwidth=4 softtabstop=4 autoindent smartindent 
+
+" Append modeline after last line in buffer.
+" Use substitute() instead of printf() to handle '%%s' modeline in LaTeX
+" files.
+function! AppendModeline()
+" vi: fen foldmethod=indent shiftwidth=2 tabstop=2 expandtab autoindent :
+  let l:modeline = printf(" vim: set fen foldmethod=indent ts=%d sw=%d tw=%d %set autoindent :",
+        \ &tabstop, &shiftwidth, &textwidth, &expandtab ? '' : 'no')
+  let l:modeline = substitute(&commentstring, "%s", l:modeline, "")
+  call append(line("$"), '')
+  call append(line("$"), l:modeline)
+endfunction
+nnoremap <silent> <Leader>ml :call AppendModeline()<CR>
+
+" autosave
+set autowrite
+
+inoremap jj <Esc>
+
+" fzf
+nnoremap <leader>f :Files<CR>
+nnoremap <leader>g :Gfiles<CR>
+nnoremap <Control>p :Gfiles<CR>
+nnoremap <leader>b :Buffers<CR>
+nnoremap <leader>h :History<CR>
+nnoremap <Leader>t :BTags<CR>
+nnoremap <Leader>T :Tags<CR>
+
+" resize split-window
+
+nnoremap <silent> <Leader>= :resize +3<CR>
+nnoremap <silent> <Leader>- :resize -3<CR>
+
+
+vmap <CR> :nohl
+
+set listchars=tab:¤›,extends:»,precedes:«,nbsp:.
+
+cd ~/codes
+
+" vim: set fen foldmethod=indent ts=4 sw=4 tw=0 et autoindent
