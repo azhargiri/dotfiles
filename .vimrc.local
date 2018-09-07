@@ -1,9 +1,10 @@
-if filereadable(expand("~/.vimrc_background"))
-    let base16colorspace=256
-    source ~/.vimrc_background
-endif
+"if filereadable(expand("~/.vimrc_background"))
+    "let base16colorspace=256
+    "source ~/.vimrc_background
+"endif
 
 if has('gui_running')
+    set guioptions-=m " remove menu 
     set lines=60 columns=200                " 40 lines of text instead of 24
     if !exists("g:spf13_no_big_font")
         if LINUX() && has("gui_running")
@@ -22,14 +23,15 @@ endif
 "colorscheme nova
 if has('gui_running')
     colorscheme summerfruit
-    colorscheme base16-railscasts
+    colorscheme gruvbox
+    "colorscheme base16-railscasts
     set background=dark
 else
     set background=dark
     colorscheme gruvbox
 endif
 
-" set nocursorline
+set nocursorline
 " set noexpandtab
 set nospell
 " set noautochdir
@@ -65,6 +67,20 @@ let g:airline_theme='papercolor'
 "Project "lpcr/lpcr2"				, "lpcr2"
 "Project "tmjx/sass"					, "sass"
 "Project "sisi/Supreme"				, "Supreme"
+
+" }}}
+
+" {{{ ctrlp project
+let g:ctrlp_projects = {
+  \ 'supreme': '~/codes/sisi/Supreme',
+  \ 'lpcr2': '~/codes/lpcr/lpcr2',
+  \ 'sass': '~/codes/tmjx/sass',
+\ }
+
+" Enables ctrlp-projects.vim for use within ctrl-p
+let g:ctrlp_extensions = ['projects']
+" remap key
+nnoremap <leader>c :CtrlPProjects<CR>
 
 " }}}
 
@@ -104,8 +120,6 @@ let g:vdebug_keymap = {
 
 let g:indent_guides_enable_on_vim_startup = 0
 
-" Plugins
-
 " ala writeroom a.k.a distraction mode
 "map K :set linebreak columns=999 guioptions=-R lines=999 fullscreen<cr>
 
@@ -114,8 +128,10 @@ set pastetoggle=<F10>
 
 " plugin neocomplete
 if count(g:spf13_bundle_groups, 'neocomplete')
-    let g:neocomplete#enable_auto_select = 0
-    let g:neocomplete#disable_auto_complete = 1
+    " Set minimum syntax keyword length.
+    let g:neocomplete#sources#syntax#min_keyword_length = 3
+    "let g:neocomplete#enable_auto_select = 0
+    "let g:neocomplete#disable_auto_complete = 1
 endif
 
 nnoremap bl :ls<CR>
@@ -126,8 +142,8 @@ set tags=./tags,tags;
 "let g:easytags_file=tags
 let g:easytags_dynamic_files = 1
 let g:easytags_async = 1
-let g:easytags_events = ['BufWritePost']
-let g:easytags_suppress_report = 1
+"let g:easytags_events = ['BufWritePost']
+"let g:easytags_suppress_report = 1
 
 " automatically reload .vimrc if any .vimrc* file changed
 autocmd! bufwritepost ~/.vimrc* source ~/.vimrc
@@ -151,6 +167,7 @@ cmap qqq qa!
 :nnoremap mb :CtrlPBuffer<CR>
 :nnoremap mr :CtrlPMRUFiles<CR>
 :nnoremap mt :CtrlPBufTag<CR>
+:nnoremap mc :CtrlPProjects<CR>
 
 cmap sh2 expandtab shiftwidth=2 softtabstop=2 autoindent smartindent 
 cmap sh4 expandtab shiftwidth=4 softtabstop=4 autoindent smartindent 
@@ -175,8 +192,8 @@ inoremap jj <Esc>
 
 " fzf
 nnoremap <leader>f :Files<CR>
-nnoremap <leader>g :Gfiles<CR>
-nnoremap <Control>p :Gfiles<CR>
+"nnoremap <C-p> :Files<CR>
+nnoremap <leader>g :GFiles<CR>
 nnoremap <leader>b :Buffers<CR>
 nnoremap <leader>h :History<CR>
 nnoremap <leader>t :BTags<CR>
@@ -192,8 +209,6 @@ vmap <CR> :nohl
 
 set listchars=tab:¤›,extends:»,precedes:«,nbsp:.
 
-cd ~/codes
-
 " http://vim.wikia.com/wiki/Fix_indentation
 " To format and return the same line where you were
 map <Leader><F7> mzgg=G`z
@@ -202,4 +217,15 @@ map <Leader>d :bd<CR>
 map <Leader>d! :bd!<CR>
 map <Leader>q :q<CR>
 map <Leader>w :w<CR>
-" vim: set fen foldmethod=indent ts=4 sw=4 tw=0 et autoindent
+
+" When your file need sudo but you forgot, just do :w!!
+cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
+
+" to easy move between pane
+map <C-J> <C-W>j
+map <C-K> <C-W>k
+map <C-L> <C-W>l
+map <C-H> <C-W>h
+
+autocmd BufWritePost *.php silent! call PhpCsFixerFixFile()
+" vim: set fen foldmethod=indent ts=4 sw=4 tw=78 et autoindent :
