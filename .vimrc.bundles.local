@@ -1,14 +1,14 @@
 "Bundle 'amiorin/vim-project'
-Bundle 'yonchu/accelerated-smooth-scroll'
-Bundle 'vim-scripts/SQLUtilities'
+"Bundle 'yonchu/accelerated-smooth-scroll'
+"Bundle 'vim-scripts/SQLUtilities'
 Bundle 'joonty/vdebug.git'
 "Bundle 'junegunn/goyo.vim'
 Bundle 'trevordmiller/nova-vim'
 "Bundle 'nanotech/jellybeans.vim'
-Bundle 'chaoren/vim-wordmotion'
-Bundle 'xolox/vim-misc'
-Bundle 'xolox/vim-easytags'
-Bundle 'chriskempson/base16-vim'
+"Bundle 'chaoren/vim-wordmotion'
+"Bundle 'xolox/vim-misc'
+"Bundle 'xolox/vim-easytags'
+"Bundle 'chriskempson/base16-vim'
 Bundle 'junegunn/fzf', { "install" : "~/.fzf" }
 Bundle 'junegunn/fzf.vim'
 Bundle 'morhetz/gruvbox'
@@ -16,3 +16,5 @@ Bundle 'EinfachToll/DidYouMean'
 UnBundle "amirh/HTML-AutoCloseTag"
 "Bundle "heracek/HTML-AutoCloseTag", { 'name': 'HTML-AutoCloseTag2' }
 Bundle "blindFS/vim-colorpicker"
+Bundle "ryanolsonx/ctrlp-projects.vim"
+Bundle 'stephpy/vim-php-cs-fixer'
