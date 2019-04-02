@@ -6,6 +6,8 @@ set nocompatible
   syntax enable           " enable syntax processing
   set background=dark
 
+" ## Leader shortcut
+  let mapleader=","       " leader is comma
 
 " ## Encoding
   " Let Vim use utf-8 internally, because many scripts require this
@@ -35,7 +37,7 @@ set nocompatible
   set lazyredraw          " redraw only when we need to.
   set showmatch           " highlight matching [{()}]
   set modelines=1	      " modelines aware
-  nnoremap <silent> <leader>ml :call AppendModeline()<CR>
+  nnoremap <silent> <Leader>ml :call AppendModeline()<CR>
   set laststatus=2  " Always display the status line
 
   if has('gui_running')
@@ -59,19 +61,19 @@ set nocompatible
 
 " ## Window/pane
   " resize split-window
-  " nnoremap <silent> <leader>= :resize +3<CR>
-  " nnoremap <silent> <leader>- :resize -3<CR>
+  " nnoremap <silent> <Leader>= :resize +3<CR>
+  " nnoremap <silent> <Leader>- :resize -3<CR>
 
   " change window width 
-  nnoremap <leader>] :vertical resize +1<CR> " increase window width
-  nnoremap <leader>[ :vertical resize -1<CR> " decrease window width
+  nnoremap <Leader>] :vertical resize +1<CR> " increase window width
+  nnoremap <Leader>[ :vertical resize -1<CR> " decrease window width
 
   " change window height
-  nnoremap <leader>- :resize -1<CR> " increase window height
-  nnoremap <leader>+ :resize +1<CR> " decrease window height 
+  nnoremap <Leader>- :resize -1<CR> " increase window height
+  nnoremap <Leader>+ :resize +1<CR> " decrease window height 
 
   " set all window equal height and width
-  nnoremap <leader>= <C-w>=
+  nnoremap <Leader>= <C-w>=
 
   
   let g:choosewin_overlay_enable = 1
@@ -82,7 +84,7 @@ set nocompatible
   set hlsearch            " highlight matches
   set ignorecase
   " turn off search highlight
-  nnoremap <leader><space> :nohlsearch<CR>
+  nnoremap <Leader><space> :nohlsearch<CR>
 
 " ## Folding
   set foldenable          " enable folding
@@ -119,9 +121,6 @@ set nocompatible
 " ## Tags
   set tags=./tags,tags
 
-" ## Leader shortcut
-  let mapleader=","       " leader is comma
-
   " zz is escape
   nmap zz <Esc>
   imap zz <Esc>
@@ -135,21 +134,21 @@ set nocompatible
   cmap <Leader><Leader> <Esc>
   omap <Leader><Leader> <Esc>
 
-  vnoremap <leader>w :w<CR>
+  vnoremap <Leader>w :w<CR>
 
   " Run commands that require an interactive shell
   nnoremap <Leader>r :RunInInteractiveShell<space>
 
   " toggle gundo
-  nnoremap <leader>u :GundoToggle<CR>
+  nnoremap <Leader>u :GundoToggle<CR>
 
   " edit vimrc/zshrc and load vimrc bindings
-  nnoremap <leader>ev :vsp $MYVIMRC<CR>
-  " nnoremap <leader>ez :vsp ~/.zshrc<CR>
-  nnoremap <leader>sv :source $MYVIMRC<CR>
+  nnoremap <Leader>ev :vsp $MYVIMRC<CR>
+  " nnoremap <Leader>ez :vsp ~/.zshrc<CR>
+  nnoremap <Leader>sv :source $MYVIMRC<CR>
 
   " save session
-  nnoremap <leader>s :mksession<CR>
+  nnoremap <Leader>s :mksession<CR>
 
   " undo/redo
   set undodir=~/.vimundo
@@ -367,13 +366,13 @@ set nocompatible
 
   " http://vim.wikia.cmm/wiki/Fix_indentation
   " To format and return the same line where you were
-  map <leader><F7> mzgg=G`z
+  map <Leader><F7> mzgg=G`z
 
   nnoremap bl :ls<CR>
-  map <leader>d :bd<CR>
-  map <leader>d! :bd!<CR>
-  map <leader>q :q<CR>
-  map <leader>w :w<CR>
+  map <Leader>d :bd<CR>
+  map <Leader>d! :bd!<CR>
+  map <Leader>q :q<CR>
+  map <Leader>w :w<CR>
 
   " pressing qqq in command will force exit
   cmap qqq qa!
@@ -398,10 +397,10 @@ set nocompatible
   set backspace=indent,eol,start
   set pastetoggle=<F10>          " https://linuxrunway.wordpress.com/2017/02/06/paste-dengan-indent-berlebih-di-vim/
 
-  nnoremap <leader>\l :set background=light<CR>
-  nnoremap <leader>\d :set background=dark<CR>
+  nnoremap <Leader>\l :set background=light<CR>
+  nnoremap <Leader>\d :set background=dark<CR>
 
-  nnoremap <leader>so :set syntax=on<CR> " useful if syntax highlighting is broken (usually after scrolling)
+  nnoremap <Leader>so :set syntax=on<CR> " useful if syntax highlighting is broken (usually after scrolling)
 
   " Add bracket at begin and end of selected text
   " see http://vim.wikia.com/wiki/Making_Parenthesis_And_Brackets_Handling_Easier
@@ -428,7 +427,7 @@ set nocompatible
   " let g:ctrlp_extensions = ['projects']
   " let g:ctrlp_projects = { }   " use ~/.project file
 
-  " nnoremap <leader>c :CtrlPProjects<CR>
+  " nnoremap <Leader>c :CtrlPProjects<CR>
 
 " ## FZF
   let g:fzf_action = {
@@ -437,15 +436,15 @@ set nocompatible
     \ 'ctrl-v': 'vsplit'
     \}
 
-  nnoremap <leader>f :Files<CR>
+  nnoremap <Leader>f :Files<CR>
   nnoremap FF :Files<CR>
   "nnoremap <C-p> :Files<CR>
-  nnoremap <leader>g :GFiles<CR>
-  nnoremap <leader>b :Buffers<CR>
+  nnoremap <Leader>g :GFiles<CR>
+  nnoremap <Leader>b :Buffers<CR>
   nnoremap BB :Buffers<CR>
-  nnoremap <leader>h :History<CR>
-  nnoremap <leader>t :BTags<CR>
-  nnoremap <leader>T :Tags<CR>
+  nnoremap <Leader>h :History<CR>
+  nnoremap <Leader>t :BTags<CR>
+  nnoremap <Leader>T :Tags<CR>
 
 " ## PHP
   let g:php_cs_fixer_path="~/.config/composer/vendor/bin/php-cs-fixer"
@@ -461,7 +460,7 @@ set nocompatible
   " open ag.vim
   " need install Silver Search (https://github.com/ggreer/the_silver_searcher.git)
   " and Ag.vim Plugin (https://github.com/rking/ag.vim.git)
-  nnoremap <leader>a :Ag
+  nnoremap <Leader>a :Ag
 
 " ## Colorscheme
   colorscheme gruvbox
@@ -499,7 +498,7 @@ set nocompatible
     \}
 
 " ## NERDTree
-  nnoremap <leader>e :NERDTreeToggle<CR>
+  nnoremap <Leader>e :NERDTreeToggle<CR>
 
 " KeepEye
   " let g:keepeye_message = '-- BREAK TIME --'
@@ -507,7 +506,7 @@ set nocompatible
   " let g:keepeye_system_notification = 1
   " highlight User1 guifg=#ffffff guibg=#ff0000
   " let g:keepeye_message_hl_user = 1
-  " nnoremap <leader>k :KeepEye<CR>
+  " nnoremap <Leader>k :KeepEye<CR>
 
 
 " dbext
