@@ -292,6 +292,11 @@ set nocompatible
     Plug 'chemzqm/todoapp.vim'
     Plug 'xolox/vim-misc'
     Plug 'xolox/vim-notes'
+    Plug 'junegunn/limelight.vim'
+    Plug 'junegunn/goyo.vim'   " distraction-free mode
+
+    " ### Productivity
+    Plug 'wakatime/vim-wakatime'
 
   call plug#end()
 
@@ -538,6 +543,11 @@ augroup vimrc-rainbowbrackets
 	autocmd!
 	autocmd FileType * let b:rainbowbrackets_enable_curly_brackets = 1
 augroup END
+
+" Goyo
+"" integrate Goyo with LimeLight to provide block-focused on distraction-free mode
+autocmd! User GoyoEnter Limelight
+autocmd! User GoyoLeave Limelight!
 
 " ## Custom function
 
