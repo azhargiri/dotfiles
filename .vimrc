@@ -127,6 +127,9 @@ set nocompatible
   vmap zz <Esc>
   cmap zz <Esc>
   omap zz <Esc>
+  
+  imap yy <Esc>
+  vmap yy <Esc>
 
   nmap <Leader><Leader> <Esc>
   imap <Leader><Leader> <Esc>
@@ -251,8 +254,9 @@ set nocompatible
     " ### PHP
     Plug 'spf13/PIV'
     Plug 'arnaud-lb/vim-php-namespace'
-    Plug 'beyondwords/vim-twig'
     Plug 'stephpy/vim-php-cs-fixer'
+    " Plug 'bpearson/vim-phpcs'
+
 
     " ### Python
     Plug 'yssource/python.vim'
@@ -287,6 +291,9 @@ set nocompatible
     Plug 'vim-scripts/SQLUtilities'
     Plug 'vim-scripts/dbext.vim'
 
+    "### Twig
+    Plug 'lumiliet/vim-twig'
+
     " ### General utilities
     Plug 'Shougo/denite.nvim'
     Plug 'chemzqm/todoapp.vim'
@@ -297,6 +304,7 @@ set nocompatible
 
     " ### Productivity
     Plug 'wakatime/vim-wakatime'
+    " Plug 'ffanzhang/vim-airline-stopwatch'
 
   call plug#end()
 
@@ -305,29 +313,38 @@ set nocompatible
     autocmd!
     " autocmd VimEnter * highlight clear SignColumn
     " autocmd BufWritePre *.php,*.py,*.js,*.txt,*.hs,*.java,*.md :call <SID>StripTrailingWhitespaces()
-    autocmd FileType java setlocal noexpandtab
-    autocmd FileType java setlocal list
-    autocmd FileType java setlocal listchars=tab:+\ ,
-    autocmd FileType java setlocal formatprg=par\ -w80\ -T4
-    autocmd FileType php setlocal expandtab
-    autocmd FileType php setlocal list
-    autocmd FileType php setlocal listchars=tab:+\ ,
-    autocmd FileType php setlocal formatprg=par\ -w80\ -T4
-    autocmd FileType php setlocal nocursorline 
-    autocmd FileType php setlocal commentstring=//\ %s
-    autocmd FileType ruby setlocal tabstop=2
-    autocmd FileType ruby setlocal shiftwidth=2
-    autocmd FileType ruby setlocal softtabstop=2
-    autocmd FileType ruby setlocal commentstring=#\ %s
-    autocmd FileType python setlocal commentstring=#\ %s
-    autocmd BufEnter *.cls setlocal filetype=java
-    autocmd BufEnter *.zsh-theme setlocal filetype=zsh
-    autocmd BufEnter Makefile setlocal noexpandtab
-    autocmd BufEnter *.sh,*.vimrc* setlocal tabstop=2
-    autocmd BufEnter *.sh,*.vimrc* setlocal shiftwidth=2
+    autocmd FileType java set noexpandtab
+    autocmd FileType java set list
+    autocmd FileType java set listchars=tab:+\ ,
+    autocmd FileType java set formatprg=par\ -w80\ -T4
+    autocmd FileType php set expandtab
+    autocmd FileType php set list
+    autocmd FileType php set listchars=tab:+\ ,
+    autocmd FileType php set formatprg=par\ -w80\ -T4
+    autocmd FileType php set nocursorline 
+    autocmd FileType php set commentstring=//\ %s
+    autocmd BufRead,BufEnter,BufNewFile *.twig set filetype=html.twig tabstop=2 shiftwidth=2 softtabstop=2
+    autocmd BufRead,BufEnter,BufNewFile *.html.twig set filetype=html.twig
+    autocmd BufRead,BufEnter,BufNewFile *.xml.twig set filetype=xml.twig
+    autocmd FileType html.twig set commentstring={#\ %s
+    autocmd FileType xml.twig set commentstring={#\ %s
+    " autocmd FileType twig set tabstop=2
+    " autocmd FileType twig set shiftwidth=2
+    " autocmd FileType twig set softtabstop=2
+    " autocmd FileType twig set commentstring={#\ %s
+    autocmd FileType ruby set tabstop=2
+    autocmd FileType ruby set shiftwidth=2
+    autocmd FileType ruby set softtabstop=2
+    autocmd FileType ruby set commentstring=#\ %s
+    autocmd FileType python set commentstring=#\ %s
+    autocmd BufEnter *.cls set filetype=java
+    autocmd BufEnter *.zsh-theme set filetype=zsh
+    autocmd BufEnter Makefile set noexpandtab
+    autocmd BufEnter *.sh,*.vimrc* set tabstop=2
+    autocmd BufEnter *.sh,*.vimrc* set shiftwidth=2
     " autocmd VimEnter * !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
     " autocmd VimLeave * !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Caps_Lock'
-    autocmd BufEnter *.sh,*.vimrc* setlocal softtabstop=2
+    autocmd BufEnter *.sh,*.vimrc* set softtabstop=2
     autocmd BufEnter *.* set syntax=on
   augroup END
 
@@ -346,28 +363,29 @@ set nocompatible
   endif
 
   " powerline symbols
-  " let g:airline_left_sep = ''
-  " let g:airline_left_alt_sep = ''
-  " let g:airline_right_sep = ''
-  " let g:airline_right_alt_sep = ''
-  " let g:airline_symbols.branch = ''
-  " let g:airline_symbols.readonly = ''
-  " let g:airline_symbols.linenr = ''
+  let g:airline_left_sep = ''
+  let g:airline_left_alt_sep = ''
+  let g:airline_right_sep = ''
+  let g:airline_right_alt_sep = ''
+  let g:airline_symbols.branch = ''
+  let g:airline_symbols.readonly = ''
+  let g:airline_symbols.linenr = ''
 
 
-  let g:airline_left_sep = '|'
-  let g:airline_left_alt_sep = '|'
-  let g:airline_right_sep = '|'
-  let g:airline_right_alt_sep = '|'
-  let g:airline_symbols.branch = '(Y)'
-  let g:airline_symbols.readonly = 'ro'
-  let g:airline_symbols.linenr = 'n/r'
+  " let g:airline_left_sep = '|'
+  " let g:airline_left_alt_sep = '|'
+  " let g:airline_right_sep = '|'
+  " let g:airline_right_alt_sep = '|'
+  " let g:airline_symbols.branch = '(Y)'
+  " let g:airline_symbols.readonly = 'ro'
+  " let g:airline_symbols.linenr = 'n/r'
   
   " Airline Theme
   let g:airline_theme='gruvbox'
 
 " ## Buffer
   set autowrite           " autosave
+  map sss :w<CR>
 
   " http://vim.wikia.cmm/wiki/Fix_indentation
   " To format and return the same line where you were
@@ -454,6 +472,10 @@ set nocompatible
 " ## PHP
   let g:php_cs_fixer_path="~/.config/composer/vendor/bin/php-cs-fixer"
   " autocmd BufWritePost *.php silent! call PhpCsFixerFixFile()
+
+  " phpcs
+  let g:syntastic_php_checkers = ['php', 'phpcs']
+  let Vimphpcs_Standard = 'vendor/azhargiri/codeigniter3-standard/CodeIgniter3'
 
 " ## Comfortable scroll
   let g:comfortable_motion_scroll_down_key = "j"
