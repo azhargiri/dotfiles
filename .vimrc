@@ -18,7 +18,7 @@ set nocompatible
   set tabstop=4       " number of visual spaces per TAB
   set softtabstop=4   " number of spaces in tab when editing
   set shiftwidth=4    " number of space when autoindent use. i.e.: '>>' pressed
-  set expandtab       " tabs are spaces
+  " set expandtab       " tabs are spaces
   set autoindent
 
   nnoremap <S-L> :tabnext<CR>
@@ -33,7 +33,7 @@ set nocompatible
   " set cursorline          " highlight current line
   filetype indent plugin on      " load filetype-specific indent files 
   filetype plugin on
-  set wildmenu            " visual autocomplete for command menu
+  set wildmenu           " visual autocomplete for command menu
   set lazyredraw          " redraw only when we need to.
   set showmatch           " highlight matching [{()}]
   set modelines=1	      " modelines aware
@@ -44,14 +44,16 @@ set nocompatible
     set guioptions-=m       " remove menu
     set guioptions-=T       " remove toolber 
     set guioptions-=L       " remove scrollbar (recheck!)
-    set guifont=Hack\ 9,
-              \Inconsolata-g\ for\ Powerline\ 9,
+    set guifont=
               \Monaco\ 9,
-              \Andale\ Mono\ Regular\ 9,
-              \Menlo\ Regular\ 11,
-              \Consolas\ Regular\ 12,
-              \Courier\ New\ Regular\ 14
-    set lines=45 columns=121                " 40 lines of text instead of 24
+              \Menlo\ Regular\ 9,
+              \Hack\ 10,
+              \Andale\ Mono\ 10,
+              \Consolas\ Regular\ 10,
+              \Inconsolata-g\ for\ Powerline\ 9,
+              \SF\ Mono\ 10
+    set lines=40 columns=121                " 40 lines of text instead of 24
+    set cursorline          " highlight current line
   else
     if &term == 'xterm' || &term == 'screen'
       set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
@@ -113,10 +115,10 @@ set nocompatible
   nnoremap gV `[v`]
 
   " jump to other pane
-  nnoremap <C-J> <C-W>j
-  nnoremap <C-K> <C-W>k
-  nnoremap <C-H> <C-W>h
-  nnoremap <C-L> <C-W>l
+  nnoremap <D-J> <C-W>j
+  nnoremap <D-K> <C-W>k
+  nnoremap <D-H> <C-W>h
+  nnoremap <D-L> <C-W>l
 
 " ## Tags
   set tags=./tags,tags
@@ -128,8 +130,7 @@ set nocompatible
   cmap zz <Esc>
   omap zz <Esc>
   
-  imap yy <Esc>
-  vmap yy <Esc>
+  nmap zz <Esc>
 
   nmap <Leader><Leader> <Esc>
   imap <Leader><Leader> <Esc>
@@ -175,8 +176,7 @@ set nocompatible
     Plug 'tpope/vim-surround'
     Plug 'tpope/vim-commentary'
     Plug 'rking/ag.vim'
-
-
+    Plug 'christoomey/vim-tmux-navigator'
 
     " Plug 'mileszs/ack.vim'
     "  let g:ackprg = 'ag --nogroup --nocolor --column'
@@ -191,7 +191,9 @@ set nocompatible
     " ### P:roject Management
     " Plug 'ryanolsonx/ctrlp-projects.vim'
     Plug 'Vigemus/fzf-proj.vim'
-        let g:fzf#proj#project_dir = "~/codes"
+        let g:fzf#proj#project_dir = "~/workspace"
+        let g:fzf#proj#max_project_depth = 3
+        let g:fzf#proj#open_new_tab = 1 
 
     " ### General debugger
     Plug 'vim-vdebug/vdebug'
@@ -214,6 +216,8 @@ set nocompatible
     Plug 'moll/vim-bbye'
     Plug 'chriskempson/base16-vim'
     Plug 'eiiches/vim-rainbowbrackets'
+    Plug 'wincent/terminus' " terminal integration
+    Plug 'dstein64/vim-win' " window management
 
     " # alternative to comfortable-motion.vim
     " Plug 'yonchu/accelerated-smooth-scroll'	
@@ -285,7 +289,7 @@ set nocompatible
 
     " ### Markdown
     Plug 'tpope/vim-markdown'
-    Plug 'spf13/vim-preview'
+    " Plug 'spf13/vim-preview'
 
     " ### SQL
     Plug 'vim-scripts/SQLUtilities'
@@ -304,6 +308,7 @@ set nocompatible
 
     " ### Productivity
     Plug 'wakatime/vim-wakatime'
+    Plug 'ActivityWatch/aw-watcher-vim'
     " Plug 'ffanzhang/vim-airline-stopwatch'
 
   call plug#end()
@@ -317,7 +322,7 @@ set nocompatible
     autocmd FileType java set list
     autocmd FileType java set listchars=tab:+\ ,
     autocmd FileType java set formatprg=par\ -w80\ -T4
-    autocmd FileType php set expandtab
+    " autocmd FileType php set expandtab
     autocmd FileType php set list
     autocmd FileType php set listchars=tab:+\ ,
     autocmd FileType php set formatprg=par\ -w80\ -T4
@@ -332,19 +337,15 @@ set nocompatible
     " autocmd FileType twig set shiftwidth=2
     " autocmd FileType twig set softtabstop=2
     " autocmd FileType twig set commentstring={#\ %s
-    autocmd FileType ruby set tabstop=2
-    autocmd FileType ruby set shiftwidth=2
-    autocmd FileType ruby set softtabstop=2
+    autocmd FileType ruby set tabstop=2 shiftwidth=2 softtabstop=2
     autocmd FileType ruby set commentstring=#\ %s
     autocmd FileType python set commentstring=#\ %s
     autocmd BufEnter *.cls set filetype=java
     autocmd BufEnter *.zsh-theme set filetype=zsh
     autocmd BufEnter Makefile set noexpandtab
-    autocmd BufEnter *.sh,*.vimrc* set tabstop=2
-    autocmd BufEnter *.sh,*.vimrc* set shiftwidth=2
+    autocmd BufEnter *.sh,*.vimrc* set tabstop=2 shiftwidth=2 softtabstop=2
     " autocmd VimEnter * !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
     " autocmd VimLeave * !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Caps_Lock'
-    autocmd BufEnter *.sh,*.vimrc* set softtabstop=2
     autocmd BufEnter *.* set syntax=on
   augroup END
 
@@ -434,6 +435,17 @@ set nocompatible
   vnoremap _[ <Esc>`>a]<Esc>`<i[<Esc>w
   vnoremap _" <Esc>`>a"<Esc>`<i"<Esc>w
   vnoremap _' <Esc>`>a'<Esc>`<i'<Esc>w
+
+  " tmux-vim integration pane/window switching. Custom mapping
+  let g:tmux_navigator_no_mappings = 1
+  nnoremap <silent> `h :TmuxNavigateLeft<cr>
+  nnoremap <silent> `j :TmuxNavigateDown<cr>
+  nnoremap <silent> `k :TmuxNavigateUp<cr>
+  nnoremap <silent> `l :TmuxNavigateRight<cr>
+  nnoremap <silent> `` :TmuxNavigatePrevious<cr>
+
+  " Disable tmux navigator when zooming the Vim pane
+  let g:tmux_navigator_disable_when_zoomed = 1
   
 " ## CtrlP
 
@@ -468,9 +480,11 @@ set nocompatible
   nnoremap <Leader>h :History<CR>
   nnoremap <Leader>t :BTags<CR>
   nnoremap <Leader>T :Tags<CR>
-
+""
+" ## FZF Proj
+  nnoremap <Leader>P :Projects<CR>
 " ## PHP
-  let g:php_cs_fixer_path="~/.config/composer/vendor/bin/php-cs-fixer"
+  " let g:php_cs_fixer_path="~/.config/composer/vendor/bin/php-cs-fixer"
   " autocmd BufWritePost *.php silent! call PhpCsFixerFixFile()
 
   " phpcs
@@ -497,7 +511,7 @@ set nocompatible
     \    "port" : 9000,
     \    "server" : 'localhost',
     \    "timeout" : 20,
-    \    "on_close" : 'detach',
+    \    "on_close" : 'close',
     \    "break_on_open" : 1,
     \    "ide_key" : 'xdebug-php',
     \    "path_maps" : {},
@@ -507,7 +521,7 @@ set nocompatible
     \    "marker_default" : '⬦',
     \    "marker_closed_tree" : '▸',
     \    "marker_open_tree" : '▾',
-    \    "continuous_mode" : 0,
+    \    "continuous_mode" : 1,
     \}
 
   let g:vdebug_keymap = {
