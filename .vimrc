@@ -45,15 +45,17 @@ set nocompatible
     set guioptions-=T       " remove toolber 
     set guioptions-=L       " remove scrollbar (recheck!)
     set guifont=
+              \CaskaydiaCove\ Nerd\ Font\ Book\ 9.5,
+              \Cascadia\ Code\ Regular\ 9.5,
               \Monaco\ 9,
+              \Hack\ 9,
               \Menlo\ Regular\ 9,
-              \Hack\ 10,
               \Andale\ Mono\ 10,
               \Consolas\ Regular\ 10,
               \Inconsolata-g\ for\ Powerline\ 9,
               \SF\ Mono\ 10
     set lines=40 columns=121                " 40 lines of text instead of 24
-    set cursorline          " highlight current line
+    set nocursorline          " highlight current line
   else
     if &term == 'xterm' || &term == 'screen'
       set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
@@ -178,6 +180,9 @@ set nocompatible
     Plug 'rking/ag.vim'
     Plug 'christoomey/vim-tmux-navigator'
 
+    " for fun
+    Plug 'segeljakt/vim-isotope'
+
     " Plug 'mileszs/ack.vim'
     "  let g:ackprg = 'ag --nogroup --nocolor --column'
     " or
@@ -192,8 +197,9 @@ set nocompatible
     " Plug 'ryanolsonx/ctrlp-projects.vim'
     Plug 'Vigemus/fzf-proj.vim'
         let g:fzf#proj#project_dir = "~/workspace"
-        let g:fzf#proj#max_project_depth = 3
+        let g:fzf#proj#max_project_depth = 5
         let g:fzf#proj#open_new_tab = 1 
+        let g:fzf#proj#fancy_separator = ""
 
     " ### General debugger
     Plug 'vim-vdebug/vdebug'
@@ -273,6 +279,7 @@ set nocompatible
     Plug 'kchmck/vim-coffee-script'
     Plug 'pangloss/vim-javascript'
     Plug 'elzr/vim-json'
+    Plug 'posva/vim-vue'
 
     " ### HTML / CSS
     Plug 'heracek/HTML-AutoCloseTag', { 'name': 'HTML-AutoCloseTag2' }
@@ -314,40 +321,40 @@ set nocompatible
   call plug#end()
 
 " ## Autogroup
-  augroup configgroup
-    autocmd!
+  " augroup configgroup
+  "   autocmd!
     " autocmd VimEnter * highlight clear SignColumn
     " autocmd BufWritePre *.php,*.py,*.js,*.txt,*.hs,*.java,*.md :call <SID>StripTrailingWhitespaces()
-    autocmd FileType java set noexpandtab
-    autocmd FileType java set list
-    autocmd FileType java set listchars=tab:+\ ,
-    autocmd FileType java set formatprg=par\ -w80\ -T4
+    " autocmd FileType java set noexpandtab
+    " autocmd FileType java set list
+    " autocmd FileType java set listchars=tab:+\ ,
+    " autocmd FileType java set formatprg=par\ -w80\ -T4
     " autocmd FileType php set expandtab
-    autocmd FileType php set list
-    autocmd FileType php set listchars=tab:+\ ,
-    autocmd FileType php set formatprg=par\ -w80\ -T4
-    autocmd FileType php set nocursorline 
-    autocmd FileType php set commentstring=//\ %s
-    autocmd BufRead,BufEnter,BufNewFile *.twig set filetype=html.twig tabstop=2 shiftwidth=2 softtabstop=2
-    autocmd BufRead,BufEnter,BufNewFile *.html.twig set filetype=html.twig
-    autocmd BufRead,BufEnter,BufNewFile *.xml.twig set filetype=xml.twig
-    autocmd FileType html.twig set commentstring={#\ %s
-    autocmd FileType xml.twig set commentstring={#\ %s
+    " autocmd FileType php set list
+    " autocmd FileType php set listchars=tab:+\ ,
+    " autocmd FileType php set formatprg=par\ -w80\ -T4
+    " autocmd FileType php set nocursorline 
+    " autocmd FileType php set commentstring=//\ %s
+    " autocmd BufRead,BufEnter,BufNewFile *.twig set filetype=html.twig tabstop=2 shiftwidth=2 softtabstop=2
+    " autocmd BufRead,BufEnter,BufNewFile *.html.twig set filetype=html.twig
+    " autocmd BufRead,BufEnter,BufNewFile *.xml.twig set filetype=xml.twig
+    " autocmd FileType html.twig set commentstring={#\ %s
+    " autocmd FileType xml.twig set commentstring={#\ %s
     " autocmd FileType twig set tabstop=2
     " autocmd FileType twig set shiftwidth=2
     " autocmd FileType twig set softtabstop=2
     " autocmd FileType twig set commentstring={#\ %s
-    autocmd FileType ruby set tabstop=2 shiftwidth=2 softtabstop=2
-    autocmd FileType ruby set commentstring=#\ %s
-    autocmd FileType python set commentstring=#\ %s
-    autocmd BufEnter *.cls set filetype=java
-    autocmd BufEnter *.zsh-theme set filetype=zsh
-    autocmd BufEnter Makefile set noexpandtab
-    autocmd BufEnter *.sh,*.vimrc* set tabstop=2 shiftwidth=2 softtabstop=2
+    " autocmd FileType ruby set tabstop=2 shiftwidth=2 softtabstop=2
+    " autocmd FileType ruby set commentstring=#\ %s
+    " autocmd FileType python set commentstring=#\ %s
+    " autocmd BufEnter *.cls set filetype=java
+    " autocmd BufEnter *.zsh-theme set filetype=zsh
+    " autocmd BufEnter Makefile set noexpandtab
+    " autocmd BufEnter *.sh,*.vimrc* set tabstop=2 shiftwidth=2 softtabstop=2
     " autocmd VimEnter * !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
     " autocmd VimLeave * !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Caps_Lock'
-    autocmd BufEnter *.* set syntax=on
-  augroup END
+    " autocmd BufEnter *.* set syntax=on
+  " augroup END
 
 " ## Backup
   set backup
@@ -488,8 +495,8 @@ set nocompatible
   " autocmd BufWritePost *.php silent! call PhpCsFixerFixFile()
 
   " phpcs
-  let g:syntastic_php_checkers = ['php', 'phpcs']
-  let Vimphpcs_Standard = 'vendor/azhargiri/codeigniter3-standard/CodeIgniter3'
+  " let g:syntastic_php_checkers = ['php', 'phpcs']
+  " let Vimphpcs_Standard = 'vendor/azhargiri/codeigniter3-standard/CodeIgniter3'
 
 " ## Comfortable scroll
   let g:comfortable_motion_scroll_down_key = "j"
@@ -510,7 +517,7 @@ set nocompatible
   let g:vdebug_options = {
     \    "port" : 9000,
     \    "server" : 'localhost',
-    \    "timeout" : 20,
+    \    "timeout" : 30,
     \    "on_close" : 'close',
     \    "break_on_open" : 1,
     \    "ide_key" : 'xdebug-php',
@@ -522,6 +529,7 @@ set nocompatible
     \    "marker_closed_tree" : '▸',
     \    "marker_open_tree" : '▾',
     \    "continuous_mode" : 1,
+    \    "layout" : 'vertical',
     \}
 
   let g:vdebug_keymap = {
@@ -584,6 +592,9 @@ augroup END
 "" integrate Goyo with LimeLight to provide block-focused on distraction-free mode
 autocmd! User GoyoEnter Limelight
 autocmd! User GoyoLeave Limelight!
+
+let g:vimspector_enable_mappings = 'HUMAN'
+packadd! vimspector
 
 " ## Custom function
 
