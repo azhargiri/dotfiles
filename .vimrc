@@ -7,7 +7,7 @@ set nocompatible
   set background=dark
 
 " ## Leader shortcut
-  let mapleader=","       " leader is comma
+  let mapleader=","       " Leader is comma
 
 " ## Encoding
   " Let Vim use utf-8 internally, because many scripts require this
@@ -18,7 +18,7 @@ set nocompatible
   set tabstop=4       " number of visual spaces per TAB
   set softtabstop=4   " number of spaces in tab when editing
   set shiftwidth=4    " number of space when autoindent use. i.e.: '>>' pressed
-  " set expandtab       " tabs are spaces
+  set expandtab       " tabs are spaces
   set autoindent
 
   nnoremap <S-L> :tabnext<CR>
@@ -27,35 +27,42 @@ set nocompatible
   cmap sh2 expandtab shiftwidth=2 softtabstop=2 autoindent smartindent 
   cmap sh4 expandtab shiftwidth=4 softtabstop=4 autoindent smartindent 
 
+" Netrw
+  let g:netrw_banner       = 1
+  let g:netrw_keepdir      = 1
+  let g:netrw_liststyle    = 3 " or 3
+  let g:netrw_sort_options = 'i'
+  let g:netrw_browse_split = 4
+  let g:netrw_winsize = 25
+
 " ## UI config
   set number              " show line numbers
+  set relativenumber      " show line number relatively
   set showcmd             " show command in bottom bar
   " set cursorline          " highlight current line
   filetype indent plugin on      " load filetype-specific indent files 
   filetype plugin on
-  set wildmenu           " visual autocomplete for command menu
+  set wildmenu            " visual autocomplete for command menu
   set lazyredraw          " redraw only when we need to.
   set showmatch           " highlight matching [{()}]
   set modelines=1	      " modelines aware
   nnoremap <silent> <Leader>ml :call AppendModeline()<CR>
-  set laststatus=2  " Always display the status line
+  set laststatus=2        " Always display the status line
 
   if has('gui_running')
     set guioptions-=m       " remove menu
     set guioptions-=T       " remove toolber 
     set guioptions-=L       " remove scrollbar (recheck!)
-    set guifont=
-              \CaskaydiaCove\ Nerd\ Font\ Book\ 9.5,
-              \Cascadia\ Code\ Regular\ 9.5,
-              \Monaco\ 9,
+    set guifont=Cascadia\ Code\ PL\ 9.5,
               \Hack\ 9,
-              \Menlo\ Regular\ 9,
-              \Andale\ Mono\ 10,
-              \Consolas\ Regular\ 10,
               \Inconsolata-g\ for\ Powerline\ 9,
+              \Monaco\ 9,
+              \Andale\ Mono\ Regular\ 9,
+              \Menlo\ Regular\ 11,
+              \Consolas\ Regular\ 12,
+              \Courier\ New\ Regular\ 14,
               \SF\ Mono\ 10
-    set lines=40 columns=121                " 40 lines of text instead of 24
-    set nocursorline          " highlight current line
+    set lines=45 columns=121                " 40 lines of text instead of 24
   else
     if &term == 'xterm' || &term == 'screen'
       set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
@@ -69,12 +76,16 @@ set nocompatible
   " nnoremap <silent> <Leader>- :resize -3<CR>
 
   " change window width 
-  nnoremap <Leader>] :vertical resize +1<CR> " increase window width
-  nnoremap <Leader>[ :vertical resize -1<CR> " decrease window width
+  " increase window width
+  nnoremap <Leader>] :vertical resize +1<CR>
+  " decrease window width
+  nnoremap <Leader>[ :vertical resize -1<CR>
 
   " change window height
-  nnoremap <Leader>- :resize -1<CR> " increase window height
-  nnoremap <Leader>+ :resize +1<CR> " decrease window height 
+  " increase window height
+  nnoremap <Leader>- :resize -1<CR> 
+  " decrease window height
+  nnoremap <Leader>+ :resize +1<CR>  
 
   " set all window equal height and width
   nnoremap <Leader>= <C-w>=
@@ -89,6 +100,10 @@ set nocompatible
   set ignorecase
   " turn off search highlight
   nnoremap <Leader><space> :nohlsearch<CR>
+
+" ## Autocompletion
+  " use Ctrl + space for omnicompletion
+  inoremap <C-Space> <C-X><C-O>  
 
 " ## Folding
   set foldenable          " enable folding
@@ -116,11 +131,18 @@ set nocompatible
   " highlight last inserted text
   nnoremap gV `[v`]
 
+  " put this character on-ward to new line
+  nnoremap ii <Insert><CR><Esc>
+  " insert char i immediately after entering insert mode
+  nnoremap iii <Insert>i
+  " insert space before current char
+  nnoremap i<Space><Space> i<Space><Esc>
+
   " jump to other pane
-  nnoremap <D-J> <C-W>j
-  nnoremap <D-K> <C-W>k
-  nnoremap <D-H> <C-W>h
-  nnoremap <D-L> <C-W>l
+  nnoremap <C-J> <C-W>j
+  nnoremap <C-K> <C-W>k
+  nnoremap <C-H> <C-W>h
+  nnoremap <C-L> <C-W>l
 
 " ## Tags
   set tags=./tags,tags
@@ -131,8 +153,6 @@ set nocompatible
   vmap zz <Esc>
   cmap zz <Esc>
   omap zz <Esc>
-  
-  nmap zz <Esc>
 
   nmap <Leader><Leader> <Esc>
   imap <Leader><Leader> <Esc>
@@ -167,6 +187,7 @@ set nocompatible
   endif
     " ### Misc
     Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+    Plug 'tpope/vim-vinegar'
     " Plug 'ctrlpvim/ctrlp.vim'
     Plug 'vim-syntastic/syntastic'
     Plug 'simnalamburt/vim-mundo'
@@ -197,9 +218,9 @@ set nocompatible
     " Plug 'ryanolsonx/ctrlp-projects.vim'
     Plug 'Vigemus/fzf-proj.vim'
         let g:fzf#proj#project_dir = "~/workspace"
-        let g:fzf#proj#max_project_depth = 5
+        let g:fzf#proj#max_project_depth = 3
         let g:fzf#proj#open_new_tab = 1 
-        let g:fzf#proj#fancy_separator = ""
+        let g:fzf#proj#fancy_separator = " "
 
     " ### General debugger
     Plug 'vim-vdebug/vdebug'
@@ -215,12 +236,12 @@ set nocompatible
     Plug 'morhetz/gruvbox'
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
-    Plug 'altercation/solarized'
-    Plug 'chriskempson/tomorrow-theme'
+    " Plug 'altercation/solarized'
+    " Plug 'chriskempson/tomorrow-theme'
     Plug 't9md/vim-choosewin'
     Plug 'yuttie/comfortable-motion.vim'
     Plug 'moll/vim-bbye'
-    Plug 'chriskempson/base16-vim'
+    " Plug 'chriskempson/base16-vim'
     Plug 'eiiches/vim-rainbowbrackets'
     Plug 'wincent/terminus' " terminal integration
     Plug 'dstein64/vim-win' " window management
@@ -264,9 +285,12 @@ set nocompatible
     " ### PHP
     Plug 'spf13/PIV'
     Plug 'arnaud-lb/vim-php-namespace'
+    Plug 'beyondwords/vim-twig'
     Plug 'stephpy/vim-php-cs-fixer'
-    " Plug 'bpearson/vim-phpcs'
+    Plug 'lvht/phpcd.vim'
 
+    " ### Drupal
+    Plug 'https://git.drupal.org/project/vimrc.git', { 'branch': '8.x-1.x', 'rtp': 'bundle/vim-plugin-for-drupal' }
 
     " ### Python
     Plug 'yssource/python.vim'
@@ -279,7 +303,10 @@ set nocompatible
     Plug 'kchmck/vim-coffee-script'
     Plug 'pangloss/vim-javascript'
     Plug 'elzr/vim-json'
-    Plug 'posva/vim-vue'
+
+    " ### Svelte
+    Plug 'leafOfTree/vim-svelte-plugin'
+    let g:vim_svelte_plugin_load_full_syntax = 1
 
     " ### HTML / CSS
     Plug 'heracek/HTML-AutoCloseTag', { 'name': 'HTML-AutoCloseTag2' }
@@ -296,45 +323,45 @@ set nocompatible
 
     " ### Markdown
     Plug 'tpope/vim-markdown'
-    " Plug 'spf13/vim-preview'
+    Plug 'spf13/vim-preview'
 
     " ### SQL
     Plug 'vim-scripts/SQLUtilities'
     Plug 'vim-scripts/dbext.vim'
-
-    "### Twig
-    Plug 'lumiliet/vim-twig'
 
     " ### General utilities
     Plug 'Shougo/denite.nvim'
     Plug 'chemzqm/todoapp.vim'
     Plug 'xolox/vim-misc'
     Plug 'xolox/vim-notes'
+    " create screenshot from selected lines to install silicon
+    " cargo install silicon
+    Plug 'segeljakt/vim-silicon'
     Plug 'junegunn/limelight.vim'
     Plug 'junegunn/goyo.vim'   " distraction-free mode
 
-    " ### Productivity
-    Plug 'wakatime/vim-wakatime'
-    Plug 'ActivityWatch/aw-watcher-vim'
+	" ### Productivity
+    " Plug 'wakatime/vim-wakatime'
+    " Plug 'ActivityWatch/aw-watcher-vim'
     " Plug 'ffanzhang/vim-airline-stopwatch'
 
   call plug#end()
 
 " ## Autogroup
-  " augroup configgroup
-  "   autocmd!
+  augroup configgroup
+    autocmd!
     " autocmd VimEnter * highlight clear SignColumn
     " autocmd BufWritePre *.php,*.py,*.js,*.txt,*.hs,*.java,*.md :call <SID>StripTrailingWhitespaces()
-    " autocmd FileType java set noexpandtab
-    " autocmd FileType java set list
-    " autocmd FileType java set listchars=tab:+\ ,
-    " autocmd FileType java set formatprg=par\ -w80\ -T4
-    " autocmd FileType php set expandtab
-    " autocmd FileType php set list
-    " autocmd FileType php set listchars=tab:+\ ,
-    " autocmd FileType php set formatprg=par\ -w80\ -T4
-    " autocmd FileType php set nocursorline 
-    " autocmd FileType php set commentstring=//\ %s
+    autocmd FileType java setlocal noexpandtab
+    autocmd FileType java setlocal list
+    autocmd FileType java setlocal listchars=tab:+\ ,
+    autocmd FileType java setlocal formatprg=par\ -w80\ -T4
+    autocmd FileType php setlocal expandtab
+    autocmd FileType php setlocal list
+    autocmd FileType php setlocal listchars=tab:+\ ,
+    autocmd FileType php setlocal formatprg=par\ -w80\ -T4
+    autocmd FileType php setlocal nocursorline 
+    autocmd FileType php setlocal commentstring=//\ %s
     " autocmd BufRead,BufEnter,BufNewFile *.twig set filetype=html.twig tabstop=2 shiftwidth=2 softtabstop=2
     " autocmd BufRead,BufEnter,BufNewFile *.html.twig set filetype=html.twig
     " autocmd BufRead,BufEnter,BufNewFile *.xml.twig set filetype=xml.twig
@@ -344,17 +371,19 @@ set nocompatible
     " autocmd FileType twig set shiftwidth=2
     " autocmd FileType twig set softtabstop=2
     " autocmd FileType twig set commentstring={#\ %s
-    " autocmd FileType ruby set tabstop=2 shiftwidth=2 softtabstop=2
-    " autocmd FileType ruby set commentstring=#\ %s
-    " autocmd FileType python set commentstring=#\ %s
-    " autocmd BufEnter *.cls set filetype=java
-    " autocmd BufEnter *.zsh-theme set filetype=zsh
-    " autocmd BufEnter Makefile set noexpandtab
-    " autocmd BufEnter *.sh,*.vimrc* set tabstop=2 shiftwidth=2 softtabstop=2
+    autocmd FileType ruby setlocal tabstop=2 shiftwidth=2 softtabstop=2
+    autocmd FileType ruby setlocal commentstring=#\ %s
+    autocmd FileType python setlocal commentstring=#\ %s
+    autocmd BufEnter *.cls setlocal filetype=java
+    autocmd BufEnter *.zsh-theme setlocal filetype=zsh
+    autocmd BufEnter Makefile setlocal noexpandtab
+    autocmd BufEnter *.sh,*.vimrc* setlocal tabstop=2
+    autocmd BufEnter *.sh,*.vimrc* setlocal shiftwidth=2
     " autocmd VimEnter * !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
     " autocmd VimLeave * !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Caps_Lock'
-    " autocmd BufEnter *.* set syntax=on
-  " augroup END
+    autocmd BufEnter *.sh,*.vimrc* setlocal softtabstop=2
+    autocmd BufEnter *.* set syntax=on
+  augroup END
 
 " ## Backup
   set backup
@@ -365,28 +394,29 @@ set nocompatible
 
 " Airline
   let g:airline_powerline_fonts = 0
+  let g:airline_extensions = []  " disable extensions
 
   if !exists('g:airline_symbols')
       let g:airline_symbols = {}
   endif
 
   " powerline symbols
-  let g:airline_left_sep = ''
-  let g:airline_left_alt_sep = ''
-  let g:airline_right_sep = ''
-  let g:airline_right_alt_sep = ''
+  " let g:airline_left_sep = ''
+  " let g:airline_left_alt_sep = ''
+  " let g:airline_right_sep = ''
+  " let g:airline_right_alt_sep = ''
+  " let g:airline_symbols.branch = ''
+  " let g:airline_symbols.readonly = ''
+  " let g:airline_symbols.linenr = ''
+
+
+  let g:airline_left_sep = '|'
+  let g:airline_left_alt_sep = '|'
+  let g:airline_right_sep = '|'
+  let g:airline_right_alt_sep = '|'
   let g:airline_symbols.branch = ''
   let g:airline_symbols.readonly = ''
   let g:airline_symbols.linenr = ''
-
-
-  " let g:airline_left_sep = '|'
-  " let g:airline_left_alt_sep = '|'
-  " let g:airline_right_sep = '|'
-  " let g:airline_right_alt_sep = '|'
-  " let g:airline_symbols.branch = '(Y)'
-  " let g:airline_symbols.readonly = 'ro'
-  " let g:airline_symbols.linenr = 'n/r'
   
   " Airline Theme
   let g:airline_theme='gruvbox'
@@ -478,6 +508,14 @@ set nocompatible
     \ 'ctrl-v': 'vsplit'
     \}
 
+  " let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6, 'border': 'rounded' } }
+  let g:fzf_layout = { 'down': '~30%' }
+  let g:fzf_preview_window = 'right'
+
+
+  " FZF for tag jumping
+  nnoremap <Leader>d :call fzf#vim#tags('^' . expand('<cword>'), {'options': '--exact --select-1 --exit-0 +i'})<CR>
+
   nnoremap <Leader>f :Files<CR>
   nnoremap FF :Files<CR>
   "nnoremap <C-p> :Files<CR>
@@ -487,11 +525,10 @@ set nocompatible
   nnoremap <Leader>h :History<CR>
   nnoremap <Leader>t :BTags<CR>
   nnoremap <Leader>T :Tags<CR>
-""
-" ## FZF Proj
-  nnoremap <Leader>P :Projects<CR>
+  nnoremap <Leader>p :Projects<CR>
+
 " ## PHP
-  " let g:php_cs_fixer_path="~/.config/composer/vendor/bin/php-cs-fixer"
+  let g:php_cs_fixer_path="~/.config/composer/vendor/bin/php-cs-fixer"
   " autocmd BufWritePost *.php silent! call PhpCsFixerFixFile()
 
   " phpcs
@@ -524,12 +561,13 @@ set nocompatible
     \    "path_maps" : {},
     \    "debug_window_level" : 0,
     \    "debug_file_level" : 0,
-    \    "watch_window_style" : 'expanded',
+    \    "watch_window_style" : 'compact',
     \    "marker_default" : '⬦',
     \    "marker_closed_tree" : '▸',
     \    "marker_open_tree" : '▾',
     \    "continuous_mode" : 1,
-    \    "layout" : 'vertical',
+    \    "layout" : "vertical",
+    \    "auto_start" : 1,
     \}
 
   let g:vdebug_keymap = {
@@ -559,7 +597,7 @@ set nocompatible
 
 
 " dbext
-  let g:dbext_default_profile_local = 'type=MYSQL:user=<user>:passwd=<passwd>:dbname=<dbname>'
+  " let g:dbext_default_profile_local = 'type=MYSQL:user=<user>:passwd=<passwd>:dbname=<dbname>'
 
 " ## base16 color
   " if filereadable(expand("~/.vimrc_background"))
@@ -582,6 +620,24 @@ let g:rainbowbrackets_enable_angle_brackets = 1
 
 " Vim Notes
 let g:notes_directories = ['~/Documents/Notes' ]
+
+" vim silicon
+let g:silicon = {
+  \   'theme':              'gruvbox',
+  \   'font':                  'Hack',
+  \   'background':         '#AAAAFF',
+  \   'shadow-color':       '#555555',
+  \   'line-pad':                   2,
+  \   'pad-horiz':                 80,
+  \   'pad-vert':                 100,
+  \   'shadow-blur-radius':         0,
+  \   'shadow-offset-x':            0,
+  \   'shadow-offset-y':            0,
+  \   'line-number':           v:true,
+  \   'round-corner':          v:true,
+  \   'window-controls':       v:true,
+  \   'output': '~/Pictures/silicon-{time:%Y-%m-%d-%H%M%S}.png',
+  \ }
 
 augroup vimrc-rainbowbrackets
 	autocmd!
