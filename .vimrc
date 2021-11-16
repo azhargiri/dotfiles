@@ -53,15 +53,17 @@ set nocompatible
     set guioptions-=m       " remove menu
     set guioptions-=T       " remove toolber 
     set guioptions-=L       " remove scrollbar (recheck!)
-    set guifont=Cascadia\ Code\ PL\ 9.5,
-              \Hack\ 9,
-              \Inconsolata-g\ for\ Powerline\ 9,
+    set guifont=
+              \CaskaydiaCove\ Nerd\ Font\ Book\ 9.5,
+              \Cascadia\ Code\ Regular\ 9.5,
               \Monaco\ 9,
-              \Andale\ Mono\ Regular\ 9,
-              \Menlo\ Regular\ 11,
-              \Consolas\ Regular\ 12,
+              \Hack\ 9,
+              \Menlo\ Regular\ 9,
+              \Andale\ Mono\ 10,
+              \Consolas\ Regular\ 10,
               \Courier\ New\ Regular\ 14,
               \SF\ Mono\ 10
+
     set lines=45 columns=121                " 40 lines of text instead of 24
   else
     if &term == 'xterm' || &term == 'screen'
@@ -218,7 +220,7 @@ set nocompatible
     " Plug 'ryanolsonx/ctrlp-projects.vim'
     Plug 'Vigemus/fzf-proj.vim'
         let g:fzf#proj#project_dir = "~/workspace"
-        let g:fzf#proj#max_project_depth = 3
+        let g:fzf#proj#max_project_depth = 5
         let g:fzf#proj#open_new_tab = 1 
         let g:fzf#proj#fancy_separator = " "
 
@@ -303,6 +305,7 @@ set nocompatible
     Plug 'kchmck/vim-coffee-script'
     Plug 'pangloss/vim-javascript'
     Plug 'elzr/vim-json'
+    Plug 'posva/vim-vue'
 
     " ### Svelte
     Plug 'leafOfTree/vim-svelte-plugin'
@@ -348,8 +351,8 @@ set nocompatible
   call plug#end()
 
 " ## Autogroup
-  augroup configgroup
-    autocmd!
+  " augroup configgroup
+  "   autocmd!
     " autocmd VimEnter * highlight clear SignColumn
     " autocmd BufWritePre *.php,*.py,*.js,*.txt,*.hs,*.java,*.md :call <SID>StripTrailingWhitespaces()
     autocmd FileType java setlocal noexpandtab
