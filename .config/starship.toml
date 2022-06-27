@@ -1,0 +1,148 @@
+format = """
+[](#9A348E)\
+$username\
+[](bg:#DA627D fg:#9A348E)\
+$directory\
+[](fg:#DA627D bg:#AA390C)\
+$git_branch\
+$git_status\
+[](fg:#AA390C bg:#195271)\
+$c\
+$elixir\
+$elm\
+$golang\
+$haskell\
+$java\
+$julia\
+$nodejs\
+$nim\
+$rust\
+$php\
+$python\
+[](fg:#195271 bg:#06969A)\
+$docker_context\
+[](fg:#06969A bg:#33658A)\
+$time\
+[ ](fg:#33658A)\
+$line_break\
+$virtualenv\
+$pyenv_prefix\
+$character"""
+
+right_format = """
+$cmd_duration\
+$battery\
+"""
+
+# Disable the blank line at the start of the prompt
+add_newline = false
+
+[character]
+# format = "[•](green)[•](fg:yellow)[•](fg:red)"
+success_symbol = "[•](green)[•](fg:yellow)[•](fg:red)[❯](fg:green)"
+error_symbol = "[•](red)[•](fg:red)[•](fg:red)[❯](fg:red)"
+vicmd_symbol = "[❮](bold green)"
+
+# You can also replace your username with a neat symbol like  to save some space
+[username]
+show_always = true
+style_user = "bg:#9A348E"
+style_root = "bg:#9A348E"
+# format = '[ $user ]($style)'
+format = '[ a ]($style)'
+
+[directory]
+style = "bg:#DA627D"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+# Here is how you can shorten some long paths by text replacement
+# similar to mapped_locations in Oh My Posh:
+[directory.substitutions]
+"Documents" = " "
+"Downloads" = " "
+"Music" = " "
+"Pictures" = " "
+# Keep in mind that the order matters. For example:
+# "Important Documents" = "  "
+# will not be replaced, because "Documents" was already substituted before.
+# So either put "Important Documents" before "Documents" or use the substituted version:
+# "Important  " = "  "
+
+[docker_context]
+symbol = " "
+style = "bg:#06969A"
+format = '[[ $symbol $context ](bg:#06969A)]($style) $path'
+
+[git_branch]
+symbol = ""
+style = "bg:#AA390C"
+format = '[[ $symbol $branch ](bg:#AA390C)]($style)'
+
+[git_status]
+style = "bg:#AA390C"
+format = '[[($all_status $ahead_behind )](bg:#AA390C)]($style)'
+
+[c]
+symbol = " "
+style = "bg:#195271"
+format = '[[ $symbol ($version) ]($style)'
+
+[elixir]
+symbol = " "
+style = "bg:#195271"
+format = '[[ $symbol ($version) ]]($style)'
+
+[golang]
+symbol = " "
+style = "bg:#195271"
+format = '[[ $symbol ($version) ]]($style)'
+
+[java]
+symbol = " "
+style = "bg:#195271"
+format = '[[ $symbol ($version) ]]($style)'
+
+[nodejs]
+symbol = ""
+style = "bg:#195271 fg:yellow bold"
+format = '[[ $symbol ($version) ]]($style)'
+
+[rust]
+symbol = ""
+style = "bg:#195271"
+format = '[[ $symbol ($version) ]]($style)'
+
+[php]
+disabled = false
+style = "bg:#195271 fg:cyan bold"
+symbol = "ﳄ"
+format = '[ $symbol ($version) ]($style)'
+
+[python]
+disabled = false
+style = "bg:#195271 fg:yellow bold"
+symbol = ""
+# symbol = "🐍"
+# pyenv_version_name = true
+python_binary = ["./venv/bin/python", "./bin/python", "python", "python3", "python2"]
+format = '[ (<$virtualenv>)($pyenv_prefix) $symbol ($version) ]($style)'
+
+[time]
+disabled = false
+time_format = "%R" # Hour:Minute Format
+style = "bg:#33658A"
+format = '[[  $time ](bg:#33658A)]($style)'
+
+[battery]
+disabled = false
+full_symbol = "🔋 "
+charging_symbol = "⚡️ "
+discharging_symbol = "💀 "
+format = "[$symbol$percentage]($style) "
+
+[[battery.display]]
+threshold = 30
+style = "bold red"
+discharging_symbol = "💦"
